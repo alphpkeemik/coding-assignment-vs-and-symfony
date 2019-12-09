@@ -1,0 +1,57 @@
+From 1c37c9e0c8e5f9fddd3b8d22b76ff4f250344345 Mon Sep 17 00:00:00 2001
+From: Tuha Juhan <tuha.juhan@ambientia.ee>
+Date: Fri, 13 Sep 2019 10:12:22 +0300
+Subject: [PATCH 3/4] CA-4 Modular structure setting up
+
+---
+ {src/Controller => config/modules}/.gitignore | 0
+ config/services.yaml                          | 6 ------
+ src/Entity/.gitignore                         | 0
+ src/Kernel.php                                | 1 +
+ src/Repository/.gitignore                     | 0
+ 5 files changed, 1 insertion(+), 6 deletions(-)
+ rename {src/Controller => config/modules}/.gitignore (100%)
+ delete mode 100644 src/Entity/.gitignore
+ delete mode 100644 src/Repository/.gitignore
+
+diff --git a/src/Controller/.gitignore b/config/modules/.gitignore
+similarity index 100%
+rename from src/Controller/.gitignore
+rename to config/modules/.gitignore
+diff --git a/config/services.yaml b/config/services.yaml
+index 5c4b417..f9aaec2 100644
+--- a/config/services.yaml
++++ b/config/services.yaml
+@@ -17,11 +17,5 @@ services:
+         resource: '../src/*'
+         exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
+
+-    # controllers are imported separately to make sure services can be injected
+-    # as action arguments even if you don't extend any base controller class
+-    App\Controller\:
+-        resource: '../src/Controller'
+-        tags: ['controller.service_arguments']
+-
+     # add more service definitions when explicit configuration is needed
+     # please note that last definitions always *replace* previous ones
+diff --git a/src/Entity/.gitignore b/src/Entity/.gitignore
+deleted file mode 100644
+index e69de29..0000000
+diff --git a/src/Kernel.php b/src/Kernel.php
+index 785b0be..1c53ff6 100644
+--- a/src/Kernel.php
++++ b/src/Kernel.php
+@@ -40,6 +40,7 @@ class Kernel extends BaseKernel
+         $loader->load($confDir.'/{packages}/'.$this->environment.'/**/*'.self::CONFIG_EXTS, 'glob');
+         $loader->load($confDir.'/{services}'.self::CONFIG_EXTS, 'glob');
+         $loader->load($confDir.'/{services}_'.$this->environment.self::CONFIG_EXTS, 'glob');
++        $loader->load($confDir.'/{modules}/*'.self::CONFIG_EXTS, 'glob');
+     }
+
+     protected function configureRoutes(RouteCollectionBuilder $routes): void
+diff --git a/src/Repository/.gitignore b/src/Repository/.gitignore
+deleted file mode 100644
+index e69de29..0000000
+--
+2.17.1
+

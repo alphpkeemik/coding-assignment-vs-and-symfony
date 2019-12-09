@@ -1,0 +1,112 @@
+From 1092b1e5611a119ed4acad62eba84d18f71e88a6 Mon Sep 17 00:00:00 2001
+From: Tuha Juhan <tuha.juhan@ambientia.ee>
+Date: Fri, 13 Sep 2019 10:34:24 +0300
+Subject: [PATCH 4/4] CA-4 Unit testing setting up
+
+---
+ phpunit.xml.dist            |  1 +
+ tests/DoctrineTestTrait.php | 79 +++++++++++++++++++++++++++++++++++++
+ 2 files changed, 80 insertions(+)
+ create mode 100644 tests/DoctrineTestTrait.php
+
+diff --git a/phpunit.xml.dist b/phpunit.xml.dist
+index cc44e06..9cd7a9c 100644
+--- a/phpunit.xml.dist
++++ b/phpunit.xml.dist
+@@ -13,6 +13,7 @@
+         <server name="SHELL_VERBOSITY" value="-1" />
+         <server name="SYMFONY_PHPUNIT_REMOVE" value="" />
+         <server name="SYMFONY_PHPUNIT_VERSION" value="7.5" />
++        <env name="DATABASE_URL" value="sqlite:///%kernel.project_dir%/var/test-data.db" />
+     </php>
+
+     <testsuites>
+diff --git a/tests/DoctrineTestTrait.php b/tests/DoctrineTestTrait.php
+new file mode 100644
+index 0000000..a36aa0a
+--- /dev/null
++++ b/tests/DoctrineTestTrait.php
+@@ -0,0 +1,79 @@
++<?php
++namespace App\Tests;
++
++use App\Kernel;
++use Doctrine\Common\Persistence\ManagerRegistry;
++use Doctrine\ORM\Tools\SchemaTool;
++use Psr\Container\ContainerInterface;
++
++/**
++ * @author mati.andreas@ambientia.ee
++ */
++trait DoctrineTestTrait
++{
++    /**
++     * @var ManagerRegistry
++     */
++    private $doctrine;
++
++    public static function setUpBeforeClass()
++    {
++        putenv('SYMFONY_DEPRECATIONS_HELPER=weak');
++
++        parent::setUpBeforeClass();
++        $doctrine = self::createDoctrine();
++
++        $em = $doctrine->getManager();
++        $s = new SchemaTool($em);
++        $s->updateSchema($em->getMetadataFactory()->getAllMetadata(), false);
++    }
++
++    private static function createDoctrine(): ManagerRegistry
++    {
++        $container = self::createContainer();
++        $doctrine = $container->get('doctrine');
++
++        return $doctrine;
++    }
++
++    private static function createContainer(): ContainerInterface
++    {
++        $kernel = new Kernel('test', false);
++        $kernel->boot();
++        $container = $kernel->getContainer();
++
++        return $container;
++    }
++
++    protected function setUp()
++    {
++        parent::setUp();
++        $container = static::createContainer();
++        $this->doctrine = $container->get('doctrine');
++        $this->clearDoctrine();
++    }
++
++
++    protected function tearDown()
++    {
++        $this->clearDoctrine();
++        parent::tearDown();
++    }
++
++    protected function clearDoctrine(): void
++    {
++        $em = $this->doctrine->getManager();
++        foreach ($this->classes as $class) {
++            foreach (
++                $em
++                    ->getRepository($class)
++                    ->findAll() as $entity
++            ) {
++                $em->remove($entity);
++            }
++        }
++        $em->flush();
++        $em->clear();
++    }
++
++}
+\ No newline at end of file
+--
+2.17.1
+

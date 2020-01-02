@@ -2,7 +2,7 @@
 Install prepared 4.* skeleton with `composer create-project`.
 
 > **Note:**
-You can apply all the actions described in there by applying
+You can apply all the actions described in here by applying
 patches from [SymfonyChanges](../SymfonyChanges)
 ´git am path/to/patches/*.patch´
 

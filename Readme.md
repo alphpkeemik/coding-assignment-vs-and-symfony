@@ -30,6 +30,8 @@ and image should be manageable.
 > **Note:** Page design optimizations by adding (complex) CSS is not
 needed during this assigment.
 
+> **Note:** No authentication is needed to add Sonata admin during
+this assigment.
 
 **Technical notes from estimation**:
 Standard VS component (clone it from CmsPage).
@@ -51,4 +53,4 @@ See [Documentation](Documentation.md)
 
 # Submitting assignment
 Please send assignment data as a compressed file containing all relevant
-data.
+data (including project GIT repositories).

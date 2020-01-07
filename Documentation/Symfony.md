@@ -1,5 +1,6 @@
 # Symfony
-Install prepared 4.* skeleton with `composer create-project`.
+Install prepared 4.* skeleton with 
+`composer create-project symfony/skeleton=4.* assigment-backend`.
 
 > **Note:**
 You can apply all the actions described in here by applying

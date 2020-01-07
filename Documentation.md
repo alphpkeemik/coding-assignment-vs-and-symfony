@@ -28,6 +28,9 @@ Clone VS from Github and keep the history.
 ## Symfony
 See [Documentation/Symfony](Documentation/Symfony.md)
 
+## Windows user
+Use Linux with [Windows Subsystem for Linux](https://docs.microsoft.com/en-us/windows/wsl/install-win10)
+
 # Coding
 ## API
 Make unit test for controller and do not extend Symfony abstract

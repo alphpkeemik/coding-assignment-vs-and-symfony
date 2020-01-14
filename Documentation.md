@@ -22,8 +22,8 @@ they are usable with command
 should be used in.
 
 ## Vue Storefront
-Clone VS from Github and keep the history.
-> **Note:** For this assignment use Vue Storefront demo as a backend.
+Clone Vue Storefront from Github and keep the history.
+> **Note:** For this assignment use [Vue Storefront demo API](https://demo.storefrontcloud.io/api/).
 
 ## Symfony
 See [Documentation/Symfony](Documentation/Symfony.md)

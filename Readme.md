@@ -34,9 +34,14 @@ needed during this assigment.
 this assigment.
 
 **Technical notes from estimation**:
-Standard VS component (clone it from CmsPage).
-Out-of the box Sonata admin. APi for VS.
-Unit and functional test for API controller.
+* Vue Storefront as front-end.
+* Symfony as back-end.
+* Out-of the box Sonata admin.
+* API for Vue Storefront to Symfony.
+* Unit and functional test for API controller in Symfony.
+* Promo page displayed in Vue Storefront.
+[CmsPage](https://github.com/DivanteLtd/vue-storefront/blob/master/src/themes/default/pages/CmsPage.vue)
+could be used as starting point / template.
 
 ## Tickets assigned to you
 * CA-3 Create technical tickets
